@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dental Clinic - Consultas</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Dental Clinic</h1>
+      <nav id="menu">
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="cadastro.html">Paciente</a></li>
+          <li><a href="agenda.html">Agendamentos</a></li>
+          <li><a href="dentista.html">Dentista</a></li>
+          <li><a href="consultas.html">Consultas</a></li>
+          <li><a href="historico.html">Histórico</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section id="consultas">
+        <h2>Consultas</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Paciente</th>
+              <th>Dentista</th>
+              <th>Data</th>
+              <th>Hora</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="corpo-tabela"></tbody>
+        </table>
+      </section>
+    </main>
+    <section id="modal-atendimento" style="display: none">
+      <div class="modal-content">
+        <span id="fechar-modal" style="cursor: pointer">&times;</span>
+        <h2>Registro de Atendimento</h2>
+        <form id="form-atendimento">
+          <input type="hidden" id="id_agendamento" name="id_agendamento" />
+          <label for="procedimentos">Procedimentos Realizados:</label>
+          <textarea
+            id="procedimentos"
+            name="procedimentos"
+            class="caixa-de-texto"
+            required
+          ></textarea>
+          <br /><br />
+          <label for="prescricoes">Prescrições Médicas:</label>
+          <textarea
+            id="prescricoes"
+            name="prescricoes"
+            class="caixa-de-texto"
+            required
+          ></textarea>
+          <br /><br />
+          <label for="recomendacoes">Recomendações de Acompanhamento:</label>
+          <textarea
+            id="recomendacoes"
+            name="recomendacoes"
+            class="caixa-de-texto"
+            required
+          ></textarea>
+          <br /><br />
+          <input type="submit" value="Salvar Atendimento" />
+        </form>
+      </div>
+    </section>
+    <script src="script.js"></script>
+  </body>
+</html>

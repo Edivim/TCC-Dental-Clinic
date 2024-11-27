@@ -1,0 +1,323 @@
+/* Estilo geral */
+body {
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #befff7;
+  color: #333;
+}
+
+header {
+  background-color: rgb(120, 252, 242);
+  background: linear-gradient(
+    288deg,
+    rgba(120, 252, 242, 1) 0%,
+    rgba(10, 224, 241, 1) 31%,
+    rgba(0, 212, 255, 1) 100%
+  );
+  padding: 20px 10%;
+  color: white;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+header h1 {
+  margin: 0;
+  color: #ff007f;
+}
+
+nav#menu ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+nav#menu ul li {
+  display: inline;
+  margin-right: 20px;
+}
+
+nav#menu ul li a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+main {
+  padding: 20px 10%;
+}
+
+section#logo {
+  background-color: white;
+  padding: 100px;
+  border-radius: 50px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+section#logo h2 {
+  color: #ff007f;
+}
+
+section#agendamentos,
+section#consultas,
+section#historico {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+section#agendamentos h2,
+section#consultas h2,
+section#historico h2 {
+  color: #ff007f;
+  text-align: center;
+}
+
+section#agendamentos table,
+section#consultas table,
+section#historico table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+section#agendamentos table th,
+section#consultas table th,
+section#historico table th,
+section#agendamentos table td,
+section#consultas table td,
+section#historico table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+section#agendamentos table th,
+section#consultas table th,
+section#historico table th {
+  background-color: #ff007f;
+  color: white;
+}
+
+section#agendamentos table tr:nth-child(even),
+section#consultas table tr:nth-child(even),
+section#historico table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+section#agendamentos button,
+section#consultas button,
+section#historico button {
+  background-color: #ff007f;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+section#agendamentos button:hover,
+section#consultas button:hover,
+section#historico button:hover {
+  background-color: #e60073;
+}
+
+/* Estiliza o contêiner do calendário */
+#calendar {
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+  padding: 20px;
+}
+
+/* Muda a cor das datas ao passar o mouse */
+.fc-day:hover {
+  background-color: #ff007f;
+  color: white;
+  cursor: pointer;
+}
+
+/* Ajusta a visualização do evento */
+.fc-event {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+/* Estilo do header do calendário */
+.fc-header-toolbar {
+  background-color: #000080;
+  color: white;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+/* Estilo para o modal de consulta */
+section#modal-consulta {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(
+    288deg,
+    rgba(120, 252, 242, 1) 0%,
+    rgba(10, 224, 241, 1) 31%,
+    rgba(0, 212, 255, 1) 100%
+  );
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para o modal de atendimento */
+section#modal-atendimento {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(
+    288deg,
+    rgba(120, 252, 242, 1) 0%,
+    rgba(10, 224, 241, 1) 31%,
+    rgba(0, 212, 255, 1) 100%
+  );
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 2px solid #ff007f; /* Borda adicionada */
+  width: 400px;
+}
+
+/* Estilo para as caixas de texto no modal de atendimento */
+#modal-atendimento .caixa-de-texto {
+  width: 90%;
+  height: 60px;
+  margin: 10px auto;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  resize: none;
+  font-size: 14px;
+}
+
+/* Ajusta o layout do modal de atendimento */
+#modal-atendimento .item-descrito {
+  margin-bottom: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
+section#paciente,
+section#dentista,
+section#consultas,
+section#historico {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+section#paciente h2,
+section#dentista h2,
+section#consultas h2,
+section#historico h2 {
+  color: #ff007f;
+  text-align: center;
+}
+
+section#paciente form,
+section#dentista form {
+  display: flex;
+  flex-direction: column;
+}
+
+section#paciente form label,
+section#dentista form label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+section#paciente form input,
+section#dentista form input,
+section#paciente form select,
+section#dentista form select,
+section#paciente form textarea,
+section#dentista form textarea {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+section#paciente form input[type="submit"],
+section#dentista form input[type="submit"] {
+  background-color: #ff007f;
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+section#paciente form input[type="submit"]:hover,
+section#dentista form input[type="submit"]:hover {
+  background-color: #e60073;
+}
+
+section#consultas table,
+section#historico table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+section#consultas table th,
+section#consultas table td,
+section#historico table th,
+section#historico table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+section#consultas table th,
+section#historico table th {
+  background-color: #ff007f;
+  color: white;
+}
+
+section#consultas table tr:nth-child(even),
+section#historico table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+section#consultas button,
+section#historico button {
+  background-color: #ff007f;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+section#consultas button:hover,
+section#historico button:hover {
+  background-color: #e60073;
+}
+/* Estilo para os filtros */ 
+.filtros { margin-bottom: 20px; } 
+.filtros label { margin-right: 10px; font-weight: bold; } 
+.filtros input { margin-right: 10px; padding: 5px; border-radius: 5px; border: 1px solid #ccc; } 
+.filtros button 
+{ background-color: #ff007f; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 14px; } .filtros button:hover

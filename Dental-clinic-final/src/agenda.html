@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dental Clinic - Agendamentos</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Dental Clinic</h1>
+      <nav id="menu">
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="cadastro.html">Paciente</a></li>
+          <li><a href="agenda.html">Agendamentos</a></li>
+          <li><a href="dentista.html">Dentista</a></li>
+          <li><a href="consultas.html">Consultas</a></li>
+          <li><a href="historico.html">Histórico</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section id="agendamentos">
+        <h2>Agendamentos</h2>
+        <section id="calendar"></section>
+      </section>
+    </main>
+    <section id="modal-consulta" style="display: none">
+      <div class="modal-content">
+        <span id="cancelar" style="cursor: pointer">&times;</span>
+        <h2>Agendar Consulta</h2>
+        <form id="form-consulta" action="cadastrar_consulta.php" method="POST">
+          <input type="hidden" id="id_agendamento" name="id_agendamento" />
+          <label for="nome_paciente">Nome do Paciente:</label>
+          <select id="nome_paciente" name="nome_paciente" required></select
+          ><br /><br />
+
+          <label for="dentista_id">Dentista:</label>
+          <select id="dentista_id" name="dentista_id" required></select
+          ><br /><br />
+
+          <label for="data_consulta">Data da Consulta:</label>
+          <input
+            type="text"
+            id="data_consulta"
+            name="data_consulta"
+            readonly
+          /><br /><br />
+          <label for="horario_consulta">Horário:</label>
+          <input
+            type="time"
+            id="horario_consulta"
+            name="horario_consulta"
+            required
+          /><br /><br />
+          <input type="submit" value="Salvar" />
+          <button
+            type="button"
+            id="deletar"
+            style="background-color: red; color: white"
+          >
+            Cancelar Agendamento
+          </button>
+        </form>
+      </div>
+    </section>
+    <script src="script.js"></script>
+    <script>
+      // Carregar os dados dos pacientes e dentistas
+      fetch("consulta_dados.php")
+        .then((response) => response.json())
+        .then((data) => {
+          const pacienteSelect = document.getElementById("nome_paciente");
+          const dentistaSelect = document.getElementById("dentista_id");
+
+          data.pacientes.forEach((paciente) => {
+            const option = document.createElement("option");
+            option.value = paciente.id;
+            option.textContent = paciente.nome;
+            pacienteSelect.appendChild(option);
+          });
+
+          data.dentistas.forEach((dentista) => {
+            const option = document.createElement("option");
+            option.value = dentista.id;
+            option.textContent = dentista.nome;
+            dentistaSelect.appendChild(option);
+          });
+        });
+
+      // Configuração do calendário e modal
+      function renderizarCalendario(eventos) {
+        const calendarEl = document.getElementById("calendar");
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: "dayGridMonth",
+          locale: "pt-br",
+          dateClick: function (info) {
+            const modal = document.getElementById("modal-consulta");
+            document.getElementById("id_agendamento").value = "";
+            document.getElementById("data_consulta").value = info.dateStr;
+            modal.style.display = "block";
+          },
+          eventClick: function (info) {
+            const modal = document.getElementById("modal-consulta");
+            document.getElementById("id_agendamento").value = info.event.id;
+            document.getElementById("nome_paciente").value =
+              info.event.extendedProps.paciente_id;
+            document.getElementById("dentista_id").value =
+              info.event.extendedProps.dentista_id;
+            document.getElementById("horario_consulta").value =
+              info.event.startStr.split("T")[1];
+            document.getElementById("data_consulta").value =
+              info.event.startStr.split("T")[0];
+            modal.style.display = "block";
+          },
+          events: eventos,
+        });
+        calendar.render();
+      }
+
+      // Buscar agendamentos e renderizar calendário
+      fetch("buscar_agendamentos.php")
+        .then((response) => response.json())
+        .then((data) => {
+          const eventos = data.map((element) => ({
+            id: element.id,
+            title: element.paciente + " - " + element.dentista,
+            start: element.data + "T" + element.hora,
+            extendedProps: {
+              paciente_id: element.paciente_id,
+              dentista_id: element.dentista_id,
+            },
+            backgroundColor: "#007BFF", // Cor de fundo azul para o evento
+            borderColor: "#007BFF", // Cor da borda azul para o evento
+            textColor: "white", // Cor do texto branco
+          }));
+          renderizarCalendario(eventos);
+        })
+        .catch(() => {
+          renderizarCalendario([]);
+        });
+
+      // Fechar modal
+      function closeModal() {
+        document.getElementById("modal-consulta").style.display = "none";
+      }
+      document.getElementById("cancelar").addEventListener("click", closeModal);
+      window.addEventListener("click", (event) => {
+        const modal = document.getElementById("modal-consulta");
+        if (event.target == modal) {
+          closeModal();
+        }
+      });
+
+      // Submeter formulário
+      document
+        .getElementById("form-consulta")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          const formData = new FormData(this);
+
+          fetch("cadastrar_consulta.php", {
+            method: "POST",
+            body: formData,
+          })
+            .then((response) => response.text())
+            .then((data) => {
+              alert(data);
+              if (!data.startsWith("Erro")) {
+                location.reload();
+              }
+            });
+        });
+
+      // Cancelar agendamento
+      document.getElementById("deletar").addEventListener("click", function () {
+        const idAgendamento = document.getElementById("id_agendamento").value;
+        if (idAgendamento) {
+          fetch("deletar_agendamento.php", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: "id=" + idAgendamento,
+          })
+            .then((response) => response.text())
+            .then((data) => {
+              alert(data);
+              location.reload();
+            });
+        }
+      });
+    </script>
+  </body>
+</html>

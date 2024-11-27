@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="BuscarHistoricoTest" file="C:\xampp\htdocs\Cursophp\Dental-clinic-final\Testes\BuscarHistoricoTest.php" tests="1" assertions="8" errors="0" failures="0" skipped="0" time="0.058398">
+    <testcase name="testBuscarHistorico" file="C:\xampp\htdocs\Cursophp\Dental-clinic-final\Testes\BuscarHistoricoTest.php" line="40" class="BuscarHistoricoTest" classname="BuscarHistoricoTest" assertions="8" time="0.058398"/>
+  </testsuite>
+</testsuites>

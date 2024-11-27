@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dental Clinic - Histórico de Atendimentos</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* Espaçamento e estilo para os filtros */
+      #historico > div {
+        margin-bottom: 20px;
+        padding: 10px;
+        background-color: #f9f9f9;
+        border-radius: 5px;
+      }
+
+      #historico input[type="date"],
+      #historico input[type="text"],
+      #historico button {
+        margin: 5px 10px 10px 0;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+
+      #historico button {
+        cursor: pointer;
+        background-color: #4caf50;
+        color: white;
+        font-weight: bold;
+      }
+
+      #historico button:hover {
+        background-color: #45a049;
+      }
+
+      #historico button:active {
+        background-color: #3e8e41;
+      }
+
+      /* Estilo da tabela */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      table th,
+      table td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+      }
+
+      table th {
+        background-color: #4caf50;
+        color: white;
+      }
+
+      table tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      table tbody tr:hover {
+        background-color: #ddd;
+      }
+      /* Nao quebrar a linha do campo data na tabela*/
+      table td:nth-child(3) {
+        white-space: nowrap;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Dental Clinic</h1>
+      <nav id="menu">
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="cadastro.html">Paciente</a></li>
+          <li><a href="agenda.html">Agendamentos</a></li>
+          <li><a href="dentista.html">Dentista</a></li>
+          <li><a href="consultas.html">Consultas</a></li>
+          <li><a href="historico.html">Histórico</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section id="historico">
+        <h2>Histórico de Atendimentos</h2>
+
+        <!-- Filtros para busca -->
+        <div>
+          <label for="filtroData">Data:</label>
+          <input type="date" id="filtroData" />
+          <label for="filtroPaciente">Paciente:</label>
+          <input
+            type="text"
+            id="filtroPaciente"
+            placeholder="Nome do paciente"
+          />
+          <label for="filtroDentista">Dentista:</label>
+          <input
+            type="text"
+            id="filtroDentista"
+            placeholder="Nome do dentista"
+          />
+          <button onclick="aplicarFiltros()">Aplicar Filtros</button>
+          <button onclick="removerFiltros()">Remover Filtros</button>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Paciente</th>
+              <th>Dentista</th>
+              <th>Data</th>
+              <th>Hora</th>
+              <th>Procedimentos</th>
+              <th>Prescrições</th>
+              <th>Recomendações</th>
+            </tr>
+          </thead>
+          <tbody id="corpo-tabela-historico"></tbody>
+        </table>
+      </section>
+    </main>
+
+    <script>
+      function aplicarFiltros() {
+        let data = document.getElementById("filtroData").value;
+        let paciente = document.getElementById("filtroPaciente").value;
+        let dentista = document.getElementById("filtroDentista").value;
+
+        let url = "buscar_historico.php?";
+
+        if (data) {
+          url += `data=${data}&`;
+        }
+        if (paciente) {
+          url += `paciente=${encodeURIComponent(paciente)}&`;
+        }
+        if (dentista) {
+          url += `dentista=${encodeURIComponent(dentista)}&`;
+        }
+
+        // Remove o último "&"
+        url = url.slice(0, -1);
+
+        fetch(url)
+          .then((response) => response.json())
+          .then((data) => {
+            var tabela = document.getElementById("corpo-tabela-historico");
+
+            // Limpa a tabela antes de adicionar novas linhas
+            tabela.innerHTML = "";
+
+            if (data.error) {
+              var linha = document.createElement("tr");
+              var coluna = document.createElement("td");
+              coluna.setAttribute("colspan", 7);
+              coluna.textContent = data.error;
+              linha.appendChild(coluna);
+              tabela.appendChild(linha);
+            } else {
+              data.forEach((element) => {
+                var linha = document.createElement("tr");
+
+                var colunaPaciente = document.createElement("td");
+                var colunaDentista = document.createElement("td");
+                var colunaData = document.createElement("td");
+                var colunaHora = document.createElement("td");
+                var colunaProcedimentos = document.createElement("td");
+                var colunaPrescricoes = document.createElement("td");
+                var colunaRecomendacoes = document.createElement("td");
+
+                colunaPaciente.textContent = element.paciente;
+                colunaDentista.textContent = element.dentista;
+                colunaData.textContent = element.data;
+                colunaHora.textContent = element.hora;
+                colunaProcedimentos.textContent = element.procedimentos;
+                colunaPrescricoes.textContent = element.prescricoes;
+                colunaRecomendacoes.textContent = element.recomendacoes;
+
+                linha.append(
+                  colunaPaciente,
+                  colunaDentista,
+                  colunaData,
+                  colunaHora,
+                  colunaProcedimentos,
+                  colunaPrescricoes,
+                  colunaRecomendacoes
+                );
+                tabela.appendChild(linha);
+              });
+            }
+          })
+          .catch((error) => {
+            console.error("Erro ao buscar dados:", error);
+          });
+      }
+
+      function removerFiltros() {
+        document.getElementById("filtroData").value = "";
+        document.getElementById("filtroPaciente").value = "";
+        document.getElementById("filtroDentista").value = "";
+        aplicarFiltros(); // Atualiza a tabela sem filtros
+      }
+
+      // Carrega o histórico de atendimentos ao carregar a página
+      window.onload = aplicarFiltros;
+    </script>
+  </body>
+</html>

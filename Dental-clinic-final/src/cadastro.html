@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <!-- Define que o documento é HTML5 e o idioma é português do Brasil -->
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Define a codificação de caracteres como UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Garante que o layout seja responsivo em dispositivos móveis -->
+    <title>Dental Clinic - Cadastro de Pacientes</title>
+    <!-- Título da página exibido na aba do navegador -->
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Vincula a página ao arquivo de estilos externos 'styles.css' -->
+  </head>
+  <body>
+    <!-- Cabeçalho da página contendo o título e o menu de navegação -->
+    <header>
+      <h1>Dental Clinic</h1>
+      <!-- Título principal da página -->
+      <nav id="menu">
+        <!-- Menu de navegação com links para outras páginas -->
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <!-- Link para a página inicial -->
+          <li><a href="cadastro.html">Paciente</a></li>
+          <!-- Link para a página de cadastro de pacientes -->
+          <li><a href="agenda.html">Agendamentos</a></li>
+          <!-- Link para a página de agendamentos -->
+          <li><a href="dentista.html">Dentista</a></li>
+          <!-- Link para a página de dentistas -->
+          <li><a href="consultas.html">Consultas</a></li>
+          <!-- Link para a página de consultas -->
+          <li><a href="historico.html">Histórico</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <!-- Seção principal da página dedicada ao cadastro de pacientes -->
+      <section id="paciente">
+        <h2>Cadastro de Pacientes</h2>
+        <!-- Título da seção de cadastro -->
+        <!-- Formulário que envia os dados do paciente para o script PHP 'cadastrar_paciente.php' usando o método POST -->
+        <form action="cadastrar_paciente.php" method="POST">
+          <!-- Campo de entrada para o nome do paciente -->
+          <label for="nome">Nome:</label>
+          <input type="text" id="nome" name="nome" required /><br /><br />
+          <!-- Campo de entrada para a idade do paciente -->
+          <label for="idade">Idade:</label>
+          <input type="number" id="idade" name="idade" required /><br /><br />
+          <!-- Campo de seleção para o sexo do paciente -->
+          <label for="sexo">Sexo:</label>
+          <select id="sexo" name="sexo" required>
+            <option value="masculino">Masculino</option>
+            <!-- Opção masculino -->
+            <option value="feminino">Feminino</option>
+            <!-- Opção feminino -->
+            <option value="outro">Outro</option>
+            <!-- Opção outro --></select
+          ><br /><br />
+          <!-- Campo de texto para o histórico médico do paciente -->
+          <label for="historico_medico">Histórico Médico:</label><br />
+          <textarea
+            id="historico_medico"
+            name="historico_medico"
+            rows="4"
+            cols="50"
+            required
+          ></textarea
+          ><br /><br />
+          <!-- Campo de entrada para o endereço do paciente -->
+          <label for="endereco">Endereço:</label>
+          <input
+            type="text"
+            id="endereco"
+            name="endereco"
+            required
+          /><br /><br />
+          <!-- Campo de entrada para o telefone do paciente -->
+          <label for="telefone">Telefone:</label>
+          <input
+            type="tel"
+            id="telefone"
+            name="telefone"
+            required
+          /><br /><br />
+          <!-- Campo de entrada para o e-mail do paciente -->
+          <label for="email">E-mail:</label>
+          <input type="email" id="email" name="email" required /><br /><br />
+          <!-- Botão de submissão que envia os dados preenchidos no formulário para o script PHP -->
+          <input type="submit" value="Cadastrar Paciente" />
+        </form>
+      </section>
+    </main>
+  </body>
+</html>
